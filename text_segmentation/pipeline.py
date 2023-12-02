@@ -3,8 +3,7 @@ from typing import Union
 
 from PIL.Image import Image
 
-from text_segmentation.character_segmentation import (
-    character_segmentation)
+from text_segmentation.character_segmentation import CharacterSegmentation
 from text_segmentation.line_segmentation import line_segmentation
 from text_segmentation.word_segmentation import word_segmentation
 
@@ -24,5 +23,6 @@ class SegmentationPipeline:
         print("Running word segmentation...")
         lines, words_in_lines = word_segmentation(section_images)
         print("Running character segmentation...")
+        character_segmentation = CharacterSegmentation()
         characters_word_line, single_character_widths, mean_character_width = character_segmentation(words_in_lines)
         return characters_word_line, single_character_widths, mean_character_width

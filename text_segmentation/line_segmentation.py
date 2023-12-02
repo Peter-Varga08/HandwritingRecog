@@ -15,6 +15,7 @@ from tqdm import tqdm
 
 from text_segmentation.plotting import *
 from character_recognition.utils import resize_pad
+from text_segmentation.utils import calc_outlier
 
 
 def timer(original_func):
@@ -59,19 +60,6 @@ def get_binary(img):
     binary = img <= thresh
     binary = binary * 1
     return binary.astype(np.uint8)
-
-
-def calc_outlier(data, method="std"):
-    '''method used to find outlier of list, either std or iqr used'''
-    if method == "iqr":
-        # method1: interquartile
-        q3, q1 = np.percentile(data, [75, 25])
-        iqr = q3 - q1
-        outlier = q1 - 1.5 * iqr
-    else:
-        # method2: standard deviation
-        outlier = np.mean(data) - 1.5*np.std(data)
-    return outlier
 
 
 def get_lines(new_image):
