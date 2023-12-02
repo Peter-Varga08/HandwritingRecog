@@ -1,9 +1,7 @@
-from matplotlib.pyplot import plot
-from numpy.testing._private.utils import print_assert_equal
-from Text_Segmentation.plotting import *
-from Text_Segmentation.lineSegmentation import calc_outlier
-from Text_Segmentation.wordSegmentation import trim_360
-from Text_Segmentation.segmentation_to_recog import get_label_probability
+from character_recognition.model import CharacterRecognizer
+from text_segmentation.plotting import *
+from text_segmentation.line_segmentation import calc_outlier
+from text_segmentation.word_segmentation import trim_360
 import itertools
 import copy
 from typing import List
@@ -320,18 +318,17 @@ def destructure_characters(characters_in_line):
     return characters
 
 
-def select_slides(sliding_characters, predicted_char_num, model, window_size, name2idx):
+def select_slides(sliding_characters, predicted_char_num, model: CharacterRecognizer, window_size, name2idx):
     '''
     given a set of slides obtained by sliding over a word, determine which slides are most likely to be an actual character
     or not using the trained model
     '''
     shift = 1
     chosen_characters = 2
-
     first = trim_360(sliding_characters[0])
-    first_label, prob_first = get_label_probability(first, model)
     last = trim_360(sliding_characters[-1])
-    last_label, prob_last = get_label_probability(last, model)
+    first_label, prob_first = model.predict(first)
+    last_label, prob_last = model.predict(last)
 
     recognised_characters = [first]
     probabilities = [prob_first]
@@ -350,7 +347,7 @@ def select_slides(sliding_characters, predicted_char_num, model, window_size, na
                 end_limit = int(prev_letter_start + window_size * 0.75 + window_size + window_size * 0.6)
                 # print(begin_limit, end_limit)
                 if start >= begin_limit and end <= end_limit :
-                    predicted_label, probability = get_label_probability(slide, model)
+                    predicted_label, probability = model.predict(slide)
                     predicted_letter = list(name2idx.keys())[predicted_label]
                     # print(f'Predicted label:{predicted_letter} probabilty:{probability}')
                     # print(f"window: [{shift * idx}-{window_size + shift * idx}]")

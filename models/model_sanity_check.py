@@ -1,4 +1,4 @@
-from Text_Segmentation.segmentation_to_recog import *
+from character_recognition.model import *
 
 # two dicts one from label names to idx
 name2idx = {'Alef': 0, 'Ayin': 1, 'Bet': 2, 'Dalet': 3, 'Gimel': 4, 'He': 5,
@@ -29,7 +29,7 @@ bin_transform = transforms.Compose([
     ThresholdTransform(thr_255=250)
 ])
 
-model = TheRecognizer()
+model = CharacterRecognizer()
 model.load_model(model.load_checkpoint('40_char_rec.ckpt', map_location=torch.device('cpu')))
 
 for img_name in val_data:

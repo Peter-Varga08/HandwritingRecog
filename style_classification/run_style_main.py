@@ -1,7 +1,7 @@
-from Style_Classification.Classify_Char_Style import *
-from Style_Classification.Calculate_Hinge_Features import *
-from Style_Classification.SVM_Style import *
+import glob
 
+from style_classification.Calculate_Hinge_Features import *
+from style_classification.SVM_Style import *
 
 '''
 Main file to run character based Style-Classification with a train-test split

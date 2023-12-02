@@ -1,20 +1,20 @@
-import cv2
-import numpy as np
-from skimage.transform import hough_line, hough_line_peaks, probabilistic_hough_line
-from skimage.filters import threshold_otsu
-import scipy.signal as ss
-import imutils
-import os
+import copy
 import csv
 import glob
 import time
-import copy
-import numpy as np
 from heapq import *
-from tqdm import tqdm
-from Text_Segmentation.segmentation_to_recog import resize_pad
+from typing import Union
+
+import imutils
+import scipy.signal as ss
+from PIL.Image import Image
 from findpeaks import findpeaks
-from Text_Segmentation.plotting import *
+from skimage.filters import threshold_otsu
+from skimage.transform import hough_line, hough_line_peaks
+from tqdm import tqdm
+
+from text_segmentation.plotting import *
+from character_recognition.utils import resize_pad
 
 
 def timer(original_func):
@@ -31,9 +31,15 @@ def timer(original_func):
     return wrapper_function
 
 
-def get_image(img_path, hough_transform=True):
+def get_image(img: Union[str, Image], hough_transform=True):
     """ Reads and returns a binary image from given path. """
-    image = cv2.imread(img_path, 0)
+    if isinstance(img, str):
+        image = cv2.imread(img, 0)
+    else:
+        # convert RGB image to BGR -- cv2 uses BGR
+        image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+        grayscale_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        _, binary_img = cv2.threshold(grayscale_img, 128, 255, cv2.THRESH_BINARY)
     if hough_transform:
         image = cv2.bitwise_not(image)
     assert len(image.shape) == 2, "Trying to read image while being in a wrong folder, or provided path is wrong."
@@ -549,10 +555,10 @@ def find_paths(hpp_clusters, binary_image, avg_lh):
     return paths
 
 
-def line_segmentation(img_path, new_folder_path):
+def line_segmentation(img: Union[str, Image], new_folder_path: str):
     '''start of the pipeline, loads the image, rotates it to make sure its straight, correct size and inversed
     obtaines the probably lines of the scroll, and runs start through them, returnes the lines of the scroll '''
-    image = rotate_image(get_image(img_path, hough_transform=True))
+    image = rotate_image(get_image(img, hough_transform=True))
     width, height = image.shape[1], image.shape[0]
     image = get_binary(resize_pad(image, 2700, 3600, 255))
 

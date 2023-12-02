@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-from Style_Classification.Classify_Char_Style import *
+from style_classification.Classify_Char_Style import *
 
 
 '''

@@ -1,6 +1,8 @@
 paths
 results
 .idea/*
+.idea
+
 #Custom
 .vscode/
 # Byte-compiled / optimized / DLL files

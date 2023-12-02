@@ -1,13 +1,14 @@
+from pathlib import Path
+
 import gradio as gr
 import os
+from PIL import Image
 from launch import run_pipeline
 
+
 # Function to process the input image
-def process_image(input_image, *args, **kwargs):
-    # Replace this with your actual image processing logic
-    output_image_path = f"processed_images/{os.path.basename(input_image)}"  # Save processed image in a folder
-    # TODO: Create 'run_demo_pipeline' that takes image as input and returns the processed image
-    run_demo_pipeline(input_image, results_path="processed_images")
+def process_image(image: Image, *args, **kwargs):
+    run_pipeline(image, results_path="gradio_results")
 
 # Gradio Interface
 iface = gr.Interface(

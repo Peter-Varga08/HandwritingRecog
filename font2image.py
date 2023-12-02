@@ -90,10 +90,10 @@ def labeltotext(labels,img_name):
                 f.write(letters[int(char)])
             f.write(letters[27])
         f.write(letters[28])
-    f.close
+    f.close()
 
         
 def styletotext(style,img_name):
     f = open(f'results/{img_name}_style.txt','w',encoding = 'utf-8')
     f.write(style)
-    f.close
+    f.close()

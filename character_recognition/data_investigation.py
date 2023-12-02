@@ -1,4 +1,4 @@
-from data_investigation import *
+from .utils import dataset_split
 
 ####Data investigation before crop####
 #avg_x,avg_y = data_size_stats("HandwritingRecog/data/Char_Recog/hhd_dataset/hdd_dataset/TRAIN/*/*.png")

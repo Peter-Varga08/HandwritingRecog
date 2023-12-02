@@ -1,5 +1,5 @@
 import numpy as np
-from Text_Segmentation.lineSegmentation import timer
+from text_segmentation.line_segmentation import timer
 
 
 def trim_section(section, section_threshold=10):

@@ -1,17 +1,8 @@
-import math
-import cv2
-from skimage import feature
-from Style_Classification.hinge_utils import *
-from Text_Segmentation.segmentation_to_recog import resize_pad
-# from segmentation_to_recog import resize_pad
-import matplotlib.pyplot as plt
+from style_classification.hinge_utils import *
+from character_recognition.utils import resize_pad
 import numpy as np
-import sys
-from scipy import stats
-from sklearn.decomposition import PCA
-import glob
 from collections import Counter
-from Style_Classification.Calculate_Hinge_Features import *
+from style_classification.Calculate_Hinge_Features import *
 
 PI = 3.14159265359
 
