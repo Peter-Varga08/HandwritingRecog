@@ -1,3 +1,6 @@
+paths
+results
+.idea/*
 #Custom
 .vscode/
 # Byte-compiled / optimized / DLL files
